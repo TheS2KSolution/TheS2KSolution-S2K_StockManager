@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "apikey",
+      "type": "java.lang.String",
+      "description": "Description for apikey."
+    },
+    {
+      "name": "apikey",
+      "type": "java.lang.String",
+      "description": "Description for apikey."
+    },
+    {
+      "name": "spring.datasource",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource."
+    },
+    {
+      "name": "spring.mvc.spring.mvc.pathmatch.matching-strategy",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.spring.mvc.pathmatch.matching-strategy."
+    },
+    {
+      "name": "spring.mvc.spring.mvc.pathmatch.matching-strategy",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.spring.mvc.pathmatch.matching-strategy."
+    },
+    {
+      "name": "spring.mvc.spring.mvc.pathmatch.matching-strategy",
+      "type": "java.lang.String",
+      "description": "Description for spring.mvc.spring.mvc.pathmatch.matching-strategy."
+    }
+  ]
+}
