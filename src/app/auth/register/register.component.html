@@ -1,1 +1,69 @@
-<p>register works!</p>
+<div class="main-wrapper">
+    <div class="account-content">
+        <div class="login-wrapper">
+            <div class="login-content">
+                <div class="login-userset">
+                    <div class="login-logo">
+                        <img src="assets/img/logo.png" alt="img">
+                    </div>
+                    <div class="login-userheading">
+                        <h3>Inscription</h3>
+                    </div>
+                    <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+                        <div class="form-login">
+                            <label>Nom de l'entreprise</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez le nom..." formControlName="entrepriseName">
+                                <i class="fas fa-building" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Numéro d'indentification fiscal</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez le numéro fiscal..." formControlName="numFiscal">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Nom d'utilisateur</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez votre nom d'utilisateur..." formControlName="username">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Email</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez votre email..." formControlName="email">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Téléphone</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez votre téléphone..." formControlName="phone">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Mot de passe</label>
+                            <div class="pass-group">
+                                <input type="password" class="pass-input" placeholder="Entrez votre mot de passe..." formControlName="password">
+                                <span class="fas toggle-password fa-eye-slash"></span>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <button type="submit" class="btn btn-login" [disabled]="!registerForm.valid">S'inscrire</button>
+                        </div>
+                    </form>
+                    <div class="signinform text-center">
+                        <h4>Vous avez déjà un compte? <a [routerLink]="['/login']" class="hover-a">Se connectter</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="login-img">
+                <img src="assets/img/login.jpg" alt="img">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,46 @@
-<p>login works!</p>
+<div class="main-wrapper">
+    <div class="account-content">
+        <div class="login-wrapper">
+            <div class="login-content">
+                <div class="login-userset">
+                    <div class="login-logo">
+                        <img src="assets/img/logo.png" alt="img">
+                    </div>
+                    <div class="login-userheading">
+                        <h3>Connexion</h3>
+                    </div>
+                    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+                        <div class="form-login">
+                            <label>Nom d'utilisateur, Email ou Téléphone</label>
+                            <div class="form-addons">
+                                <input type="text" placeholder="Entrez votre identifiant..." formControlName="usernameOrEmailOrPhone">
+                                <img src="assets/img/icons/mail.svg" alt="img">
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <label>Mot de passe</label>
+                            <div class="pass-group">
+                                <input type="password" class="pass-input" placeholder="Entrez votre mot de passe..." formControlName="password">
+                                <span class="fas toggle-password fa-eye-slash"></span>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <div class="alreadyuser">
+                                <h4><a href="forgetpassword.html" class="hover-a">Mot de passe oublié?</a></h4>
+                            </div>
+                        </div>
+                        <div class="form-login">
+                            <button type="submit" class="btn btn-login" [disabled]="!loginForm.valid">Se connecter</button>
+                        </div>
+                    </form>
+                    <div class="signinform text-center">
+                        <h4>Vous n'avez pas de compte? <a [routerLink]="['/register']" class="hover-a">S'inscrire</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="login-img">
+                <img src="assets/img/login.jpg" alt="img">
+            </div>
+        </div>
+    </div>
+</div>
