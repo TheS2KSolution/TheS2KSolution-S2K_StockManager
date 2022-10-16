@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/stockmanager/compte")
 public class CompteController {
 
-    private CompteService compteService;
+    private final CompteService compteService;
     @PostMapping("/create")
     public Boolean saveCompte(@RequestBody Compte compte) {
         return compteService.saveCompte(compte);

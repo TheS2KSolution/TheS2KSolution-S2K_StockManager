@@ -44,17 +44,20 @@ public class CompteServiceImpl implements CompteService {
     public void disable(Long id) {
         Compte disableCompte = compteRepository.findById(id).orElseThrow();
         disableCompte.setEtat(Etat.DESACTIVER);
+        compteRepository.save(disableCompte);
     }
 
     @Override
     public void enable(Long id) {
         Compte enableCompte = compteRepository.findById(id).orElseThrow();
         enableCompte.setEtat(Etat.ACTIVER);
+        compteRepository.save(enableCompte);
     }
 
     @Override
     public void delete(Long id) {
         Compte deleteCompte = compteRepository.findById(id).orElseThrow();
         deleteCompte.setEtat(Etat.SUPPRIMER);
+        compteRepository.save(deleteCompte);
     }
 }

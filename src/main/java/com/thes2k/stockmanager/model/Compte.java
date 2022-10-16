@@ -23,7 +23,7 @@ public class Compte {
     @Column(unique = true,nullable = false)
     private String username;
     @Column(nullable = false)
-    private String passeword;
+    private String password;
     @Column(unique = true,nullable = false)
     private String phone;
     @Embedded
