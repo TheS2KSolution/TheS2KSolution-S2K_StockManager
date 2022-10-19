@@ -37,7 +37,7 @@ public class SecurityConfig
 
         //Stateless – No session will be created or used by Spring Security
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeHttpRequests().antMatchers("/login/**").permitAll();
+        http.authorizeHttpRequests().antMatchers("/login/**", "/api/stockmanager/compte/refreshToken/**").permitAll();
         http.authorizeHttpRequests().anyRequest().authenticated();
 
         http.addFilter(new CompteAuthenticationFilter(authenticationManagerBean()));

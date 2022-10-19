@@ -5,14 +5,21 @@ import com.thes2k.stockmanager.service.CompteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/stockmanager/compte")
 public class CompteController {
-
     private final CompteService compteService;
+
+    @GetMapping("/refreshToken")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response){
+        compteService.refreshToken(request, response);
+    }
+
     @PostMapping("/create")
     public Boolean saveCompte(@RequestBody Compte compte) {
         return compteService.saveCompte(compte);

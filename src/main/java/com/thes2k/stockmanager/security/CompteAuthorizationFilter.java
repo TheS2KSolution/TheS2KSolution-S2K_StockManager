@@ -29,44 +29,48 @@ public class CompteAuthorizationFilter extends OncePerRequestFilter
 {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
-        {
-            try
+        if(request.getServletPath().equals("/api/stockmanager/compte/refreshToken")){
+            filterChain.doFilter(request, response);
+        }else {
+            String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if(authorizationHeader != null && authorizationHeader.startsWith("Bearer "))
             {
-                String token = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-                JWTVerifier jwtVerifier = JWT.require(algorithm).build();
-                DecodedJWT decodedJWT = jwtVerifier.verify(token);
-                String username = decodedJWT.getSubject();
-                String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
-                Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
+                try
+                {
+                    String token = authorizationHeader.substring("Bearer ".length());
+                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    JWTVerifier jwtVerifier = JWT.require(algorithm).build();
+                    DecodedJWT decodedJWT = jwtVerifier.verify(token);
+                    String username = decodedJWT.getSubject();
+                    String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
+                    Collection<SimpleGrantedAuthority> authorities = new HashSet<>();
 
-                stream(roles).forEach(role -> {
-                    authorities.add(new SimpleGrantedAuthority(role));
-                });
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    stream(roles).forEach(role -> {
+                        authorities.add(new SimpleGrantedAuthority(role));
+                    });
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    filterChain.doFilter(request, response);
+                }
+                catch (Exception e)
+                {
+                    Map<String, String> output = new HashMap<>();
+                    output.put("message", e.getMessage());
+                    output.put("status", String.valueOf(HttpStatus.FORBIDDEN.value()));
+                    response.setHeader("message", e.getMessage());
+                    response.setStatus(HttpStatus.FORBIDDEN.value());
+                    response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+                    try {
+                        new ObjectMapper().writeValue(response.getOutputStream(), output);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+            }else {
                 filterChain.doFilter(request, response);
             }
-            catch (Exception e)
-            {
-                Map<String, String> output = new HashMap<>();
-                output.put("message", e.getMessage());
-                output.put("status", String.valueOf(HttpStatus.FORBIDDEN.value()));
-                response.setHeader("message", e.getMessage());
-                response.setStatus(HttpStatus.FORBIDDEN.value());
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-                try {
-                    new ObjectMapper().writeValue(response.getOutputStream(), output);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-
-        }else {
-            filterChain.doFilter(request, response);
         }
     }
 }
