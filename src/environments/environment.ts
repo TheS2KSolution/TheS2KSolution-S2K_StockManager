@@ -5,8 +5,8 @@
 export const environment = {
 
   production: false,
-  authApiUrl : 'http://localhost:8080/login',
-  apiUrl : 'http://localhost:8080/api/stockmanager',
+  authApiUrl : 'http://192.168.1.198:8080/login',
+  apiUrl : 'http://192.168.1.198:8080/api/stockmanager',
   
 };
 
