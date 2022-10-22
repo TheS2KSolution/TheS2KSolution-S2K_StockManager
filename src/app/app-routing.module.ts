@@ -4,13 +4,14 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashbordComponent } from './Components/dashbord/dashbord.component';
 import { UsersComponent } from './Components/users/users.component';
+import { IsLoggedGuard } from './core/guard/is-logged.guard';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: 'register', component: RegisterComponent},
-  {path: 'dashbord', component: DashbordComponent},
-  {path: 'users', component: UsersComponent}
+  {path: 'dashbord', component: DashbordComponent, canActivate: [IsLoggedGuard]},
+  {path: 'users', component: UsersComponent, canActivate: [IsLoggedGuard]}
 ];
 
 @NgModule({
