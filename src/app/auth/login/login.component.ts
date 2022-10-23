@@ -48,7 +48,6 @@ export class LoginComponent implements OnInit {
             this.toastr.showErrorMessage("Une erreur est survenue !");
           },
         }
-      )    
-    
+      );
   }
 }

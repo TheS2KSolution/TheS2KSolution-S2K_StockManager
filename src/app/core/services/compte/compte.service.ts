@@ -13,4 +13,8 @@ export class CompteService {
   public getAllCompte(){
     return this.http.get(this.compteUrl+"/all");
   }
+
+  public saveNewCompte(saveData: any){
+    return this.http.post(this.compteUrl+"/create", saveData);
+  }
 }

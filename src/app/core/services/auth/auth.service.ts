@@ -18,8 +18,8 @@ export class AuthService {
   login(username: string, password: string) {
     var data = new FormData();
     data.append('usernameOrEmailOrPhone', username);
-    data.append('password', password)
-    return this.http.post(environment.authApiUrl, data).pipe(
+    data.append('password', password);
+    return this.http.post(environment.authApiUrl, data, {responseType: "json"}).pipe(
       map((tokens: any) => {
         localStorage.setItem('accessToken', tokens['accessToken']);
         localStorage.setItem('refreshToken', tokens['refreshToken']);
