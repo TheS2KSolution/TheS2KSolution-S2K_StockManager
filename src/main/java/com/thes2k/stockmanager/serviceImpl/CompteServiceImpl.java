@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thes2k.stockmanager.model.*;
 import com.thes2k.stockmanager.repository.CompteRepository;
 import com.thes2k.stockmanager.repository.RoleRepo;
+import com.thes2k.stockmanager.repository.SuperAdminRepository;
 import com.thes2k.stockmanager.service.CompteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CompteServiceImpl implements CompteService, UserDetailsService {
     private final CompteRepository compteRepository;
+    private  final SuperAdminRepository superAdminRepository;
     private final RoleRepo roleRepo;
 
     @Override
@@ -118,12 +120,12 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
 
     @Override
     public Boolean saveCompte(Compte compte) {
-        Compte existPhone = compteRepository.findByPhone(compte.getPhone());
-        Compte existEmail = compteRepository.findByEmail(compte.getEmail());
-        Compte existUsername = compteRepository.findByUsername(compte.getUsername());
+        boolean isCompteExists = checkIfCompteExists(compte.getUsername(), compte.getEmail(), compte.getPhone());
 
-        if (existEmail !=null || existUsername !=null || existPhone !=null)
+        if (!isCompteExists){
             return false;
+        }
+
         compte.setPassword(new BCryptPasswordEncoder().encode(compte.getPassword()));
         compteRepository.save(compte);
         return true;
@@ -164,52 +166,24 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     }
 
     @Override
-    public Boolean saveEnt(Entreprise entreprise) {
-        entreprise.setTypeCompte(entreprise.getClass().getSimpleName());
-        compteRepository.save(entreprise);
-        return true;
-    }
-
-    @Override
-    public Boolean saveUtilisateur(Utilisateur utilisateur) {
-        utilisateur.setTypeCompte(utilisateur.getClass().getSimpleName());
-        compteRepository.save(utilisateur);
-        return true;
-    }
-
-    @Override
     public Boolean saveAdmin(SuperAdmin superAdmin) {
-        superAdmin.setTypeCompte(superAdmin.getClass().getSimpleName());
-        compteRepository.save(superAdmin);
+
+        boolean isCompteExists = checkIfCompteExists(superAdmin.getUsername(), superAdmin.getEmail(), superAdmin.getPhone());
+
+        if (!isCompteExists){
+            return false;
+        }
+
+        superAdmin.setPassword(new BCryptPasswordEncoder().encode(superAdmin.getPassword()));
+        superAdminRepository.save(superAdmin);
         return true;
     }
 
-    /*@Override
-    public Entreprise saveEnt(String codeEntreprise, String entrepriseName, String codeFiscal,Long compteId) {
+    public boolean checkIfCompteExists(String username, String email, String phone){
+        Compte existUsername = compteRepository.findByUsername(username);
+        Compte existEmail = compteRepository.findByEmail(email);
+        Compte existPhone = compteRepository.findByPhone(phone);
 
-        Entreprise entreprise = new Entreprise();
-        entreprise.setEntrepriseName(entrepriseName);
-        entreprise.setCodeEntreprise(codeEntreprise);
-        entreprise.setCodeFiscal(codeFiscal);
-        entreprise.setType(entreprise.getClass().getSimpleName());
-        Entreprise saveEnt=compteRepository.save(entreprise);
-        return saveEnt;
-    }*/
-    /*@Override
-    public Utilisateur saveUtilisateur(String codeUtilisateur ,Long compteId) {
-
-        Utilisateur utilisateur = new Utilisateur();
-        utilisateur.setCodeUtilisateur(codeUtilisateur);
-        utilisateur.setType(utilisateur.getClass().getSimpleName());
-        Utilisateur saUtilisateur = compteRepository.save(utilisateur);
-        return saUtilisateur;
-    }*/
-
-    /*@Override
-    public SuperAdmin saveAdmin(Compte compte)  {
-
-        compte.setType(compte.getClass().getSimpleName());
-        SuperAdmin saveSuperAdmin = (SuperAdmin) compteRepository.save(compte);
-        return saveSuperAdmin;
-    }*/
+        return existEmail == null && existUsername == null && existPhone == null;
+    }
 }

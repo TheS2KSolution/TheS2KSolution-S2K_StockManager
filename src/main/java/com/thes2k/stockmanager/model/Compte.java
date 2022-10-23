@@ -1,6 +1,9 @@
 package com.thes2k.stockmanager.model;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,15 +13,23 @@ import java.util.Set;
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", length = 12, discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(name = "SUPER_ADMIN", value = SuperAdmin.class),
+        @JsonSubTypes.Type(name = "UTILISATEUR", value = Utilisateur.class),
+        @JsonSubTypes.Type(name = "ENTREPRISE", value = Entreprise.class)
+})
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Compte {
+@SuperBuilder
+public  class  Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String typeCompte;
+   // private String typeCompte;
     private String fullName;
     @Column(unique = true,nullable = false)
     private String email;
@@ -32,12 +43,12 @@ public class Compte {
     private Address address;
     private String photo;
     private Etat etat = Etat.DESACTIVER;
-
     @Column( nullable = false, updatable = false)
     private LocalDate creationDate = LocalDate.now() ;
     private LocalDate lastModifiedDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Roles> roles = new HashSet<>();
+
 
 }

@@ -17,7 +17,5 @@ public interface CompteService {
     void  disable(Long id);
     void  enable(Long id);
     void  delete(Long id);
-    Boolean saveEnt( Entreprise entreprise);
-    Boolean saveUtilisateur(Utilisateur utilisateur);
     Boolean saveAdmin(SuperAdmin superAdmin);
 }

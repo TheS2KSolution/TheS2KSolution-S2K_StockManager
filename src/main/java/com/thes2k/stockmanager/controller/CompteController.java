@@ -26,26 +26,22 @@ public class CompteController {
     public Boolean saveCompte(@RequestBody Compte compte) {
         return compteService.saveCompte(compte);
     }
-    @PostMapping("/create/entreprise")
-    public Boolean saveEnt(@RequestBody Entreprise entreprise) {
-        return compteService.saveEnt(entreprise);
-    }
-    @PostMapping("/create/utilsateur")
-    public Boolean saveutilisateur(@RequestBody Utilisateur utilisateur) {
-        return compteService.saveUtilisateur(utilisateur);
-    }
+
     @PostMapping("/create/super")
     public Boolean saveAdmin(@RequestBody SuperAdmin superAdmin) {
         return compteService.saveAdmin(superAdmin);
     }
+
     @GetMapping("/all")
     public List<Compte> listCompte() {
         return compteService.listCompte();
     }
+
     @GetMapping("/detail/{id}")
     public Compte detailCompte(@PathVariable("id") Long id) {
         return compteService.detailCompte(id);
     }
+
     @GetMapping("/disable/{id}")
     public void disable(@PathVariable("id") Long id) {
         compteService.disable(id);

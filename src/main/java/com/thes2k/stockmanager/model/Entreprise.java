@@ -9,13 +9,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("entreprise")
+@DiscriminatorValue("ENTREPRISE")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 public class Entreprise extends Compte {
     private String codeEntreprise;
-    private String entrepriseName;
     private String codeFiscal;
 }
