@@ -1,0 +1,24 @@
+jwt:
+  secret: '7f*%R8={+j(R#1QNw,=yC<i3+?;v>b>dP@xM?#!h,uD]_ck23tg2|IY3r|sMtO|m'
+server:
+  port: 8080
+#  error:
+#    whitelabel:
+#      enabled: false
+Spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/Fullbackend?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+    password: nanouroukou
+    username: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto:  update
+    properties:
+      hibernat:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  web:
+#    resources:
+#      add-mappings: false
