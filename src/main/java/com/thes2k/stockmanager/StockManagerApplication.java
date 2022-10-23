@@ -1,9 +1,6 @@
 package com.thes2k.stockmanager;
 
-import com.thes2k.stockmanager.model.Compte;
-import com.thes2k.stockmanager.model.Etat;
-import com.thes2k.stockmanager.model.RoleName;
-import com.thes2k.stockmanager.model.Roles;
+import com.thes2k.stockmanager.model.*;
 import com.thes2k.stockmanager.serviceImpl.CompteServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -27,9 +24,14 @@ public class StockManagerApplication implements CommandLineRunner {
         compteService.saveRole(new Roles(null, RoleName.ROLE_SUPERADMIN));
         compteService.saveRole(new Roles(null, RoleName.ROLE_ADMIN));
 
-        Compte compte = new Compte(null, "Super Admin", "superadmin@thes2k.com",
+        Compte compte = new Compte(null, "Utilisateur", "SuperAdmin","superadmin@thes2k.com",
                 "superadmin", "hello@2022", "+2233026354", null, null, Etat.ACTIVER, LocalDate.now(), null, null);
         compteService.saveCompte(compte);
         compteService.addRoleToCompte("superadmin", RoleName.ROLE_SUPERADMIN);
+
+
+
+
+
     }
 }

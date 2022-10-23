@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", length = 12, discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,6 +18,7 @@ public class Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String typeCompte;
     private String fullName;
     @Column(unique = true,nullable = false)
     private String email;

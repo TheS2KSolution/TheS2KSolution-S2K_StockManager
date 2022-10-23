@@ -1,16 +1,14 @@
 package com.thes2k.stockmanager.service;
 
-import com.thes2k.stockmanager.model.Compte;
-import com.thes2k.stockmanager.model.RoleName;
-import com.thes2k.stockmanager.model.Roles;
+import com.thes2k.stockmanager.model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 public interface CompteService {
     void refreshToken(HttpServletRequest request, HttpServletResponse response);
-
     void saveRole(Roles roles);
     void addRoleToCompte(String usernameOrEmailOrPhone, RoleName roleName);
     Boolean saveCompte(Compte compte);
@@ -19,4 +17,7 @@ public interface CompteService {
     void  disable(Long id);
     void  enable(Long id);
     void  delete(Long id);
+    Boolean saveEnt( Entreprise entreprise);
+    Boolean saveUtilisateur(Utilisateur utilisateur);
+    Boolean saveAdmin(SuperAdmin superAdmin);
 }
