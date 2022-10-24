@@ -2,11 +2,15 @@ package com.thes2k.stockmanager.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,26 +33,23 @@ public  class  Compte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   // private String typeCompte;
     private String fullName;
     @Column(unique = true,nullable = false)
     private String email;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String phone;
     @Embedded
     private Address address;
     private String photo;
-    private Etat etat = Etat.DESACTIVER;
-    @Column( nullable = false, updatable = false)
-    private LocalDate creationDate = LocalDate.now() ;
+    private Etat_Compte etatCompte = Etat_Compte.DESACTIVER;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime creationDate = LocalDateTime.now();
     private LocalDate lastModifiedDate;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Roles> roles = new HashSet<>();
-
 
 }

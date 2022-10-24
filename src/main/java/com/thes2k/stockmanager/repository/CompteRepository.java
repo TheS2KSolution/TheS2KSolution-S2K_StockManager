@@ -1,12 +1,10 @@
 package com.thes2k.stockmanager.repository;
 
 import com.thes2k.stockmanager.model.Compte;
-import com.thes2k.stockmanager.model.Etat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public interface CompteRepository extends JpaRepository<Compte, Long> {
@@ -16,5 +14,5 @@ public interface CompteRepository extends JpaRepository<Compte, Long> {
     Compte findByEmail(String email);
     Compte findByPhone(String phone);
 
-    List<Compte> findCompteByEtat(Etat etat);
+    //List<Compte> findCompteByEtat(Etat_Compte etatCompte);
 }

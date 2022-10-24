@@ -1,14 +1,16 @@
 package com.thes2k.stockmanager;
 
-import com.thes2k.stockmanager.model.*;
-import com.thes2k.stockmanager.repository.SuperAdminRepository;
-import com.thes2k.stockmanager.serviceImpl.CompteServiceImpl;
+import com.thes2k.stockmanager.model.Etat_Compte;
+import com.thes2k.stockmanager.model.RoleName;
+import com.thes2k.stockmanager.model.Roles;
+import com.thes2k.stockmanager.model.SuperAdmin;
+import com.thes2k.stockmanager.service.Implementation.CompteServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -28,10 +30,10 @@ public class StockManagerApplication implements CommandLineRunner {
         superAdmin.setFullName("S2K SuperAdmin");
         superAdmin.setEmail("thes2ksolution@gmail.com");
         superAdmin.setUsername("superadmin");
-        superAdmin.setPassword("SuperAdmin");
+        superAdmin.setPassword("hello@2022");
         superAdmin.setPhone("SuperAdmin");
-        superAdmin.setEtat(Etat.ACTIVER);
-        superAdmin.setCreationDate(LocalDate.now());
+        superAdmin.setEtatCompte(Etat_Compte.ACTIVER);
+        superAdmin.setCreationDate(LocalDateTime.now());
         compteService.saveAdmin(superAdmin);
         compteService.addRoleToCompte("superadmin", RoleName.ROLE_SUPERADMIN);
     }
