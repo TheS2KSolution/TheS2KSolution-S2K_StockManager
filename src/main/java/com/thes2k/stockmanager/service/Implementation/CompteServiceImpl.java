@@ -60,7 +60,6 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", account.getRoles().stream().map(role -> role.getRoleName().toString()).collect(Collectors.toList()))
                         .sign(algorithm);
-
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("accessToken", newAccessToken);
                 tokens.put("refreshToken", refreshToken);
