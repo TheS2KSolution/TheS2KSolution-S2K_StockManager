@@ -12,7 +12,7 @@ public class EntrepriseValidator {
         if (dto == null) {
             errors.add("Veillez renseigner le nom de l'entreprise");
             errors.add("Veillez renseigner le CodeFiscal de l'entreprise ");
-            errors.add("Veillez renseigner le Mail de l'entreprise");
+            errors.add("Veillez renseigner l'email de l'entreprise");
             errors.add("Veillez renseigner username de l'entreprise");
             errors.add("Veillez renseigner logo de l'entreprise");
             errors.add("Veillez renseigner password de l'entreprise");
@@ -47,10 +47,6 @@ public class EntrepriseValidator {
             errors.add("Veillez renseigner la photo de l'entreprise");
 
         }
-//        if (!StringUtils.hasLength((CharSequence) dto.getAddressDto())) {
-//            errors.add("Veillez renseigner logo de l'entreprise");
-//
-//        }
 
         return errors;
     }

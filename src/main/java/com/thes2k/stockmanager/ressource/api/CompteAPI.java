@@ -48,7 +48,7 @@ public interface CompteAPI {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La liste des Comptes / une liste vide "),
     })
-    List<Compte> listCompte();
+    List<CompteDto> listCompte();
 
     @GetMapping(value = APP_ROOT + "/detail/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi le detailCompte  d'un compte ", notes = "Cette methode permet de renvoyer le detailCompte se trouve dans la BDD", responseContainer = "List<compteDto>")

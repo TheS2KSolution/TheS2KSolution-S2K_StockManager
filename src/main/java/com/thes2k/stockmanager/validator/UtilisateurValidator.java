@@ -54,7 +54,8 @@ public class UtilisateurValidator {
             if (!StringUtils.hasLength(utilisateurDto.getAddressDto().getPays())) {
                 errors.add("Le champs pays est Obligatoire");
 
-            }           if (!StringUtils.hasLength(utilisateurDto.getAddressDto().getCommune())) {
+            }
+            if (!StringUtils.hasLength(utilisateurDto.getAddressDto().getCommune())) {
                 errors.add("Le champs commune est Obligatoire");
 
             }

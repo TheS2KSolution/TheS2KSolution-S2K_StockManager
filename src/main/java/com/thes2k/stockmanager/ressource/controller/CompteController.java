@@ -37,7 +37,7 @@ public class CompteController implements CompteAPI {
     }
 
     @Override
-    public List<Compte> listCompte() {
+    public List<CompteDto> listCompte() {
         return compteService.listCompte();
     }
 

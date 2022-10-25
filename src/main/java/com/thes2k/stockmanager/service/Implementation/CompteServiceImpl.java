@@ -10,8 +10,10 @@ import com.thes2k.stockmanager.dto.EntrepriseDto;
 import com.thes2k.stockmanager.exception.InvalidEntityException;
 import com.thes2k.stockmanager.exception.Response;
 import com.thes2k.stockmanager.mapper.CompteMapper;
+import com.thes2k.stockmanager.mapper.EntrepriseMapper;
 import com.thes2k.stockmanager.model.*;
 import com.thes2k.stockmanager.repository.CompteRepository;
+import com.thes2k.stockmanager.repository.EntrepriseRepository;
 import com.thes2k.stockmanager.repository.RoleRepository;
 import com.thes2k.stockmanager.repository.SuperAdminRepository;
 import com.thes2k.stockmanager.service.feature.CompteService;
@@ -49,6 +51,8 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     private final RoleRepository roleRepository;
     private final Response response;
     private final CompteMapper compteMapper;
+    private final EntrepriseRepository entrepriseRepository;
+    private final EntrepriseMapper entrepriseMapper;
 
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
@@ -110,17 +114,15 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     @Override
     public Response saveRole(Roles roles) {
         Roles rolesExisting = roleRepository.findByRoleName(roles.getRoleName());
-        if (rolesExisting != null){
+        if (rolesExisting != null) {
             response.setStatus(0);
             response.setMsg("Role non enregitré");
-        }
-
-            else{
-                response.setStatus(1);
-                response.setMsg("Role ajouté avec succes");
+        } else {
+            response.setStatus(1);
+            response.setMsg("Role ajouté avec succes");
             roleRepository.save(roles);
         }
-            return response;
+        return response;
     }
 
     @Transactional
@@ -145,17 +147,19 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     public Response saveCompte(CompteDto compteDto) {
         boolean isCompteExists = checkIfCompteExists(compteDto.getUsername(), compteDto.getEmail(), compteDto.getPhone());
         Compte compte = compteMapper.fromEntity(compteDto);
-        List<String>errors = CompteValidator.validate(compteDto);
         EntrepriseDto entrepriseDto = new EntrepriseDto();
+        Entreprise entreprise= entrepriseMapper.fromEntity(entrepriseDto);
+        List<String> errors = CompteValidator.validate(compteDto);
+
         if (!errors.isEmpty()) {
             throw new InvalidEntityException(-1, "Merci de bien verifier vos informations", errors);
-        } else if(!isCompteExists){
+        } else if (!isCompteExists) {
             response.setStatus(0);
             response.setMsg("ce compte existe déja ");
-        }
-      else {
+        } else {
             compteDto.setPassword(new BCryptPasswordEncoder().encode(compte.getPassword()));
             entrepriseDto.setCodeEntreprise("ENT" + entrepriseDto.getId());
+            entrepriseRepository.save(entreprise);
             compteRepository.save(compte);
             response.setStatus(1);
             response.setMsg("Compte enregistrer avec succes");
@@ -167,9 +171,8 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     @Override
     public List<CompteDto> listCompte() {
 
-        return  compteRepository.findAll().stream().map(compteMapper::toEntity).collect(Collectors.toList());
+        return compteRepository.findAll().stream().map(compteMapper::toEntity).collect(Collectors.toList());
     }
-
 
 
     @Override
