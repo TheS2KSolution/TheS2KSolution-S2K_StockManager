@@ -20,14 +20,14 @@ public class CompteValidator {
 
             return errors;
         }
-        if (!StringUtils.hasLength(dto.getNom())) {
-            errors.add("Veillez renseigner le nom ");
-
-        }
-        if (!StringUtils.hasLength(dto.getPrenom())) {
+//        if (!StringUtils.hasLength(dto.getNom())) {
+//            errors.add("Veillez renseigner le nom ");
+//
+//        }
+       /* if (!StringUtils.hasLength(dto.getPrenom())) {
             errors.add("Veillez renseigner le Prenom ");
 
-        }
+        }*/
         if (!StringUtils.hasLength(dto.getEmail())) {
             errors.add("Veillez renseigner le Mail ");
 
@@ -41,10 +41,10 @@ public class CompteValidator {
             errors.add("Veillez renseigner le Mot de passe ");
 
         }
-        if (!StringUtils.hasLength((CharSequence) dto.getAddressDto())) {
+       /* if (!StringUtils.hasLength((CharSequence) dto.getAddressDto())) {
             errors.add("Veillez renseigner l'Adresse");
 
-        }
+        }*/
 
         return errors;
     }

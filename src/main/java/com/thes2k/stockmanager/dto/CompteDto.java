@@ -15,13 +15,13 @@ import java.util.Set;
 public class CompteDto {
     private Integer id;
     private String fullName;
-    private String nom;
-    private String prenom;
+    //private String nom;
+   // private String prenom;
     private String phone;
     private String email;
     private String username;
     private String password;
-    private AddressDto addressDto;
+    //private AddressDto addressDto;
     private String photo;
     private List<RolesDto> rolesDtos;
     //private EntrepriseDto entrepriseDto;

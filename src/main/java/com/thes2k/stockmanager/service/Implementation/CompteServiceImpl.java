@@ -148,7 +148,7 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
         boolean isCompteExists = checkIfCompteExists(compteDto.getUsername(), compteDto.getEmail(), compteDto.getPhone());
         Compte compte = compteMapper.fromEntity(compteDto);
         EntrepriseDto entrepriseDto = new EntrepriseDto();
-        Entreprise entreprise= entrepriseMapper.fromEntity(entrepriseDto);
+        Entreprise entreprise = entrepriseMapper.fromEntity(entrepriseDto);
         List<String> errors = CompteValidator.validate(compteDto);
 
         if (!errors.isEmpty()) {
