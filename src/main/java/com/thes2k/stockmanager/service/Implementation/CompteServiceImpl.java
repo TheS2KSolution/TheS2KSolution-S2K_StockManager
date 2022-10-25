@@ -5,11 +5,17 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thes2k.stockmanager.dto.CompteDto;
+import com.thes2k.stockmanager.dto.EntrepriseDto;
+import com.thes2k.stockmanager.exception.InvalidEntityException;
+import com.thes2k.stockmanager.exception.Response;
+import com.thes2k.stockmanager.mapper.CompteMapper;
 import com.thes2k.stockmanager.model.*;
 import com.thes2k.stockmanager.repository.CompteRepository;
 import com.thes2k.stockmanager.repository.RoleRepository;
 import com.thes2k.stockmanager.repository.SuperAdminRepository;
 import com.thes2k.stockmanager.service.feature.CompteService;
+import com.thes2k.stockmanager.validator.CompteValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,20 +40,21 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 @Getter
 @Setter
+@RequiredArgsConstructor
 public class CompteServiceImpl implements CompteService, UserDetailsService {
     private final CompteRepository compteRepository;
-    private  final SuperAdminRepository superAdminRepository;
+    private final SuperAdminRepository superAdminRepository;
     private final RoleRepository roleRepository;
+    private final Response response;
+    private final CompteMapper compteMapper;
 
     @Override
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
-            try
-            {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            try {
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
@@ -65,9 +72,7 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
                 tokens.put("refreshToken", refreshToken);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 Map<String, String> output = new HashMap<>();
                 output.put("message", e.getMessage());
                 output.put("status", String.valueOf(HttpStatus.FORBIDDEN.value()));
@@ -82,7 +87,7 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
                 }
             }
 
-        }else {
+        } else {
             throw new RuntimeException("Refresh token is missing !");
         }
     }
@@ -103,43 +108,69 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     }
 
     @Override
-    public void saveRole(Roles roles){
+    public Response saveRole(Roles roles) {
         Roles rolesExisting = roleRepository.findByRoleName(roles.getRoleName());
-        if (rolesExisting != null)
-            return;
+        if (rolesExisting != null){
+            response.setStatus(0);
+            response.setMsg("Role non enregitré");
+        }
 
-        roleRepository.save(roles);
+            else{
+                response.setStatus(1);
+                response.setMsg("Role ajouté avec succes");
+            roleRepository.save(roles);
+        }
+            return response;
     }
 
     @Transactional
     @Override
-    public void addRoleToCompte(String usernameOrEmailOrPhone, RoleName roleName) {
+    public Response addRoleToCompte(String usernameOrEmailOrPhone, RoleName roleName) {
         Compte compte = compteRepository.findCompteByEmailOrPhoneOrUsername(usernameOrEmailOrPhone);
         Roles roles = roleRepository.findByRoleName(roleName);
 
-        if(compte == null || roleName == null)
-            return;
-
-        compte.getRoles().add(roles);
-    }
-
-    @Override
-    public Boolean saveCompte(Compte compte) {
-        Entreprise entreprise = new Entreprise();
-        boolean isCompteExists = checkIfCompteExists(compte.getUsername(), compte.getEmail(), compte.getPhone());
-        if (!isCompteExists){
-            return false;
+        if (compte == null || roleName == null) {
+            response.setStatus(0);
+            response.setMsg("Role non ajouté au compte");
+        } else {
+            response.setStatus(1);
+            response.setMsg("Role ajouté au compte avec succes ");
+            compte.getRoles().add(roles);
         }
-        compte.setPassword(new BCryptPasswordEncoder().encode(compte.getPassword()));
-        entreprise.setCodeEntreprise("ENT" + entreprise.getId());
-        compteRepository.save(compte);
-        return true;
+        return response;
+
     }
 
     @Override
-    public List<Compte> listCompte() {
-        return compteRepository.findAll();
+    public Response saveCompte(CompteDto compteDto) {
+        boolean isCompteExists = checkIfCompteExists(compteDto.getUsername(), compteDto.getEmail(), compteDto.getPhone());
+        Compte compte = compteMapper.fromEntity(compteDto);
+        List<String>errors = CompteValidator.validate(compteDto);
+        EntrepriseDto entrepriseDto = new EntrepriseDto();
+        if (!errors.isEmpty()) {
+            throw new InvalidEntityException(-1, "Merci de bien verifier vos informations", errors);
+        } else if(!isCompteExists){
+            response.setStatus(0);
+            response.setMsg("ce compte existe déja ");
+        }
+      else {
+            compteDto.setPassword(new BCryptPasswordEncoder().encode(compte.getPassword()));
+            entrepriseDto.setCodeEntreprise("ENT" + entrepriseDto.getId());
+            compteRepository.save(compte);
+            response.setStatus(1);
+            response.setMsg("Compte enregistrer avec succes");
+        }
+
+        return response;
     }
+
+    @Override
+    public List<CompteDto> listCompte() {
+
+        return  compteRepository.findAll().stream().map(compteMapper::toEntity).collect(Collectors.toList());
+    }
+
+
 
     @Override
     public Compte detailCompte(Long id) {
@@ -150,24 +181,51 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     }
 
     @Override
-    public void disable(Long id) {
-        Compte disableCompte = compteRepository.findById(id).orElseThrow();
-        disableCompte.setEtatCompte(Etat_Compte.DESACTIVER);
-        compteRepository.save(disableCompte);
+    public Response disable(Long id) {
+        if (id == null) {
+            response.setStatus(0);
+            response.setMsg("aucun article n'appartient a ce id:" + id);
+        } else {
+            Compte disableCompte = compteRepository.findById(id).orElseThrow();
+            disableCompte.setEtatCompte(Etat_Compte.DESACTIVER);
+            compteRepository.save(disableCompte);
+            response.setStatus(1);
+            response.setMsg("Article désactivé avec succes");
+        }
+        return response;
     }
 
     @Override
-    public void enable(Long id) {
-        Compte enableCompte = compteRepository.findById(id).orElseThrow();
-        enableCompte.setEtatCompte(Etat_Compte.ACTIVER);
-        compteRepository.save(enableCompte);
+    public Response enable(Long id) {
+        if (id == null) {
+            response.setStatus(0);
+            response.setMsg("aucun article n'appartient a ce id:" + id);
+        } else {
+            Compte enableCompte = compteRepository.findById(id).orElseThrow();
+            enableCompte.setEtatCompte(Etat_Compte.ACTIVER);
+            compteRepository.save(enableCompte);
+            response.setStatus(1);
+            response.setMsg("Article activé avec succes");
+
+        }
+        return response;
+
     }
 
     @Override
-    public void delete(Long id) {
-        Compte deleteCompte = compteRepository.findById(id).orElseThrow();
-        deleteCompte.setEtatCompte(Etat_Compte.SUPPRIMER);
-        compteRepository.save(deleteCompte);
+    public Response delete(Long id) {
+        if (id == null) {
+            response.setStatus(0);
+            response.setMsg("aucun article n'appartient a ce id:" + id);
+        } else {
+            Compte deleteCompte = compteRepository.findById(id).orElseThrow();
+            deleteCompte.setEtatCompte(Etat_Compte.SUPPRIMER);
+            compteRepository.save(deleteCompte);
+            response.setStatus(1);
+            response.setMsg("Article supprimé avec succes");
+        }
+        return response;
+
     }
 
     @Override
@@ -175,7 +233,7 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
 
         boolean isCompteExists = checkIfCompteExists(superAdmin.getUsername(), superAdmin.getEmail(), superAdmin.getPhone());
 
-        if (!isCompteExists){
+        if (!isCompteExists) {
             return false;
         }
 
@@ -184,11 +242,11 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
         return true;
     }
 
-    public boolean checkIfCompteExists(String username, String email, String phone){
+    public boolean checkIfCompteExists(String username, String email, String phone) {
         Compte existUsername = compteRepository.findByUsername(username);
         Compte existEmail = compteRepository.findByEmail(email);
         Compte existPhone = compteRepository.findByPhone(phone);
-
         return existEmail == null && existUsername == null && existPhone == null;
+
     }
 }

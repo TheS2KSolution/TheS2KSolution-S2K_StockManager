@@ -1,21 +1,34 @@
 package com.thes2k.stockmanager.service.feature;
 
-import com.thes2k.stockmanager.model.*;
+import com.thes2k.stockmanager.dto.CompteDto;
+import com.thes2k.stockmanager.exception.Response;
+import com.thes2k.stockmanager.model.Compte;
+import com.thes2k.stockmanager.model.RoleName;
+import com.thes2k.stockmanager.model.Roles;
+import com.thes2k.stockmanager.model.SuperAdmin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 public interface CompteService {
     void refreshToken(HttpServletRequest request, HttpServletResponse response);
-    void saveRole(Roles roles);
-    void addRoleToCompte(String usernameOrEmailOrPhone, RoleName roleName);
-    Boolean saveCompte(Compte compte);
-    List<Compte> listCompte();
+
+    Response saveRole(Roles roles);
+
+    Response addRoleToCompte(String usernameOrEmailOrPhone, RoleName roleName);
+
+    Response saveCompte(CompteDto compteDto);
+
+    List<CompteDto> listCompte();
+
     Compte detailCompte(Long id);
-    void  disable(Long id);
-    void  enable(Long id);
-    void  delete(Long id);
+
+    Response disable(Long id);
+
+    Response enable(Long id);
+
+    Response delete(Long id);
+
     Boolean saveAdmin(SuperAdmin superAdmin);
 }

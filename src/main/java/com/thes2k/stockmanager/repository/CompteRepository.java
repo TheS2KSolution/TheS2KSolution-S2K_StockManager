@@ -10,8 +10,11 @@ import org.springframework.stereotype.Repository;
 public interface CompteRepository extends JpaRepository<Compte, Long> {
     @Query("select compte from Compte compte where compte.email = :param or compte.phone = :param or compte.username = :param")
     Compte findCompteByEmailOrPhoneOrUsername(@Param("param") String usernameOrEmailOrPhone);
+
     Compte findByUsername(String username);
+
     Compte findByEmail(String email);
+
     Compte findByPhone(String phone);
 
     //List<Compte> findCompteByEtat(Etat_Compte etatCompte);

@@ -11,5 +11,5 @@ public class AddressDto {
     private String ville;
     private String commune;
     private String quartier;
-    private Integer telephone;
+    private String telephone;
 }

@@ -1,5 +1,6 @@
 package com.thes2k.stockmanager.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,12 +8,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class EntrepriseDto {
+public class SuperAdminDto {
     private Integer id;
-    private String entrepriseName;
-    private String codeFiscal;
     private String email;
-    private String codeEntreprise;
     private String username;
     private String password;
     private String phone;

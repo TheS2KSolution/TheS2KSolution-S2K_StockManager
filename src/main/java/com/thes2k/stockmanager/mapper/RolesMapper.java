@@ -3,7 +3,6 @@ package com.thes2k.stockmanager.mapper;
 
 import com.thes2k.stockmanager.dto.RolesDto;
 import com.thes2k.stockmanager.model.Roles;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

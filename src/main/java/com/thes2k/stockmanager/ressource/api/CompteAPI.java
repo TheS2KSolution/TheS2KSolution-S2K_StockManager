@@ -1,6 +1,7 @@
 package com.thes2k.stockmanager.ressource.api;
 
 import com.thes2k.stockmanager.dto.CompteDto;
+import com.thes2k.stockmanager.exception.Response;
 import com.thes2k.stockmanager.model.Compte;
 import com.thes2k.stockmanager.model.SuperAdmin;
 import io.swagger.annotations.Api;
@@ -32,7 +33,7 @@ public interface CompteAPI {
             @ApiResponse(code = 200, message = "compte creé/modifié"),
             @ApiResponse(code = 400, message = " compte n' est pas validé")
     })
-    Boolean saveCompte(@RequestBody Compte compte);
+    Response saveCompte(@RequestBody CompteDto compteDto);
 
     @PostMapping(value = APP_ROOT + "/create/super", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregister un compte super Admin ", notes = "Cette methode permet d enregistrer ou modifier un compte super Admin", response = CompteDto.class)

@@ -25,8 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFilter
-{
+public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -37,8 +36,7 @@ public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(usernameOrEmailOrPhone, password);
             return authenticationManager.authenticate(authToken);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             Map<String, String> output = new HashMap<>();
             output.put("message", e.getMessage());
             output.put("status", String.valueOf(HttpStatus.FORBIDDEN.value()));
@@ -76,7 +74,7 @@ public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFi
         output.put("accessToken", accessToken);
         output.put("refreshToken", refreshToken);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        try{
+        try {
             new ObjectMapper().writeValue(response.getOutputStream(), output);
         } catch (IOException ex) {
             throw new RuntimeException(ex);

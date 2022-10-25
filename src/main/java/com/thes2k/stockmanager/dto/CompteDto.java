@@ -24,7 +24,7 @@ public class CompteDto {
     private AddressDto addressDto;
     private String photo;
     private List<RolesDto> rolesDtos;
-    private EntrepriseDto entrepriseDto;
+    //private EntrepriseDto entrepriseDto;
     private Address address;
     private Etat_CompteDto etat_compteDto = Etat_CompteDto.DESACTIVER;
     private LocalDate creationDate = LocalDate.now();

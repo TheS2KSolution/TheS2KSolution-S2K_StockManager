@@ -14,6 +14,6 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Utilisateur extends Compte{
+public class Utilisateur extends Compte {
     private String codeUtilisateur;
 }

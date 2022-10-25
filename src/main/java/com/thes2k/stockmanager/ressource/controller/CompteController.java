@@ -1,5 +1,7 @@
 package com.thes2k.stockmanager.ressource.controller;
 
+import com.thes2k.stockmanager.dto.CompteDto;
+import com.thes2k.stockmanager.exception.Response;
 import com.thes2k.stockmanager.model.Compte;
 import com.thes2k.stockmanager.model.SuperAdmin;
 import com.thes2k.stockmanager.ressource.api.CompteAPI;
@@ -25,8 +27,8 @@ public class CompteController implements CompteAPI {
     }
 
     @Override
-    public Boolean saveCompte(@RequestBody Compte compte) {
-        return compteService.saveCompte(compte);
+    public Response saveCompte(@RequestBody CompteDto compteDto) {
+        return compteService.saveCompte(compteDto);
     }
 
     @Override

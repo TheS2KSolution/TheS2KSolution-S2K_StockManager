@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("SUPER_ADMIN")
-public class SuperAdmin extends  Compte
-{
+public class SuperAdmin extends Compte {
 
 }
