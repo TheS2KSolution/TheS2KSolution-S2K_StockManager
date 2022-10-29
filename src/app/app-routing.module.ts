@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { DashbordComponent } from './Components/dashbord/dashbord.component';
-import { UsersComponent } from './Components/users/users.component';
+import { DashbordComponent } from './components/dashbord/dashbord.component';
+import { UsersComponent } from './components/users/users.component';
 import { IsLoggedGuard } from './core/guard/is-logged.guard';
 
 const routes: Routes = [

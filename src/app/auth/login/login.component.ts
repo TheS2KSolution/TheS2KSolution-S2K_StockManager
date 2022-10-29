@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
             if(accessToken !== null && refreshToken !== null){
             this.toastr.showSuccessMessage("Connexion valide !");
-              this.router.navigate(['/users']);
+              this.router.navigate(['/dashbord']);
             }
           },
           error:(error)=>{
