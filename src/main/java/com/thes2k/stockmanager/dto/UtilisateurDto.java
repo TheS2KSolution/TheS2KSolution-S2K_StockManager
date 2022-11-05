@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class UtilisateurDto {
+public class UtilisateurDto extends CompteDto {
     private String nom;
     private String prenom;
     private String phone;

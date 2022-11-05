@@ -9,7 +9,7 @@ import java.util.List;
 public interface EntrepriseService {
     Response save(EntrepriseDto dto);
 
-    EntrepriseDto findByCodeEntreprise(String codeEntreprise);
+
 
     EntrepriseDto finById(Integer id);
 

@@ -43,10 +43,6 @@ public class EntrepriseImpl implements EntrepriseService {
         return response;
     }
 
-    @Override
-    public EntrepriseDto findByCodeEntreprise(String codeEntreprise) {
-        return null;
-    }
 
     @Override
     public EntrepriseDto finById(Integer id) {

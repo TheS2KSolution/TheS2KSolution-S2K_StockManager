@@ -11,6 +11,7 @@ public class CompteMapper {
 
     public CompteDto toEntity(Compte compte) {
         CompteDto compteDto = new CompteDto();
+        compteDto.setType(compte.getClass().getSimpleName());
         BeanUtils.copyProperties(compte, compteDto);
         return compteDto;
     }

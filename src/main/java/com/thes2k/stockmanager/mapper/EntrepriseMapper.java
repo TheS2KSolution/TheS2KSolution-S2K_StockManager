@@ -13,6 +13,7 @@ public class EntrepriseMapper {
 
     public EntrepriseDto toEntity(Entreprise entreprise) {
         EntrepriseDto entrepriseDto = new EntrepriseDto();
+        entrepriseDto.setType(entreprise.getClass().getSimpleName());
         BeanUtils.copyProperties(entreprise, entrepriseDto);
         return entrepriseDto;
     }

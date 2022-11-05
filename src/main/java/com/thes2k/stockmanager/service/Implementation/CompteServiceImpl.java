@@ -158,8 +158,6 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
             response.setMsg("ce compte existe déja ");
         } else {
             compteDto.setPassword(new BCryptPasswordEncoder().encode(compte.getPassword()));
-            entrepriseDto.setCodeEntreprise("ENT" + entrepriseDto.getId());
-            entrepriseRepository.save(entreprise);
             compteRepository.save(compte);
             response.setStatus(1);
             response.setMsg("Compte enregistrer avec succes");

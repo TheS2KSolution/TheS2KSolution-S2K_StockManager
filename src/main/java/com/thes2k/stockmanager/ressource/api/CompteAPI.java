@@ -43,7 +43,7 @@ public interface CompteAPI {
     })
     Boolean saveAdmin(@RequestBody SuperAdmin superAdmin);
 
-    @GetMapping(value = APP_ROOT + "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "compte/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste  des comptes ", notes = "Cette methode permet de renvoyer la liste des compte  qui se trouve dans la BDD", responseContainer = "List<compteDto>")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La liste des Comptes / une liste vide "),

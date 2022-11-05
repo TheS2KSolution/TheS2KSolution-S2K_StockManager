@@ -7,12 +7,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class EntrepriseDto {
+public class EntrepriseDto extends CompteDto {
     private Integer id;
     private String entrepriseName;
     private String codeFiscal;
     private String email;
-    private String codeEntreprise;
     private String username;
     private String password;
     private String phone;
