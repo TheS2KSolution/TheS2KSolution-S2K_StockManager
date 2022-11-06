@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thes2k.stockmanager.dto.CompteDto;
-import com.thes2k.stockmanager.dto.EntrepriseDto;
 import com.thes2k.stockmanager.exception.InvalidEntityException;
 import com.thes2k.stockmanager.exception.Response;
 import com.thes2k.stockmanager.mapper.CompteMapper;
@@ -147,10 +146,7 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     public Response saveCompte(CompteDto compteDto) {
         boolean isCompteExists = checkIfCompteExists(compteDto.getUsername(), compteDto.getEmail(), compteDto.getPhone());
         Compte compte = compteMapper.fromEntity(compteDto);
-        EntrepriseDto entrepriseDto = new EntrepriseDto();
-        Entreprise entreprise = entrepriseMapper.fromEntity(entrepriseDto);
         List<String> errors = CompteValidator.validate(compteDto);
-
         if (!errors.isEmpty()) {
             throw new InvalidEntityException(-1, "Merci de bien verifier vos informations", errors);
         } else if (!isCompteExists) {
@@ -162,7 +158,6 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
             response.setStatus(1);
             response.setMsg("Compte enregistrer avec succes");
         }
-
         return response;
     }
 
@@ -217,13 +212,13 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
     public Response delete(Long id) {
         if (id == null) {
             response.setStatus(0);
-            response.setMsg("aucun article n'appartient a ce id:" + id);
+            response.setMsg("aucun compte n'appartient a ce id:" + id);
         } else {
             Compte deleteCompte = compteRepository.findById(id).orElseThrow();
             deleteCompte.setEtatCompte(Etat_Compte.SUPPRIMER);
             compteRepository.save(deleteCompte);
             response.setStatus(1);
-            response.setMsg("Article supprimé avec succes");
+            response.setMsg("Compte supprimé avec succes");
         }
         return response;
 

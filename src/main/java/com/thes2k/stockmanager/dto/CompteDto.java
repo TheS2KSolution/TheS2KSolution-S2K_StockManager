@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 public class CompteDto  {
-    private Integer id;
     private String type;
     private String fullName;
     private String phone;

@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.thes2k.stockmanager.utils.Constant.APP_ROOT;
 
-@Api(APP_ROOT + "/entreprise")
+@Api(APP_ROOT + "/entreprises")
 public interface EntrepriseApi {
     @PostMapping(value = APP_ROOT + "/entreprise/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregidter une entreprise", notes = "Cette methode permet d enregistrer ou modifier un entreprise", response = EntrepriseDto.class)
@@ -30,15 +30,8 @@ public interface EntrepriseApi {
             @ApiResponse(code = 200, message = "L' entreprise a ete trouver dans la BDD"),
             @ApiResponse(code = 404, message = "Aucune entreprise n'a pas ete trouver dans la BDD avec l ID fournit")
     })
-    EntrepriseDto findById(@PathVariable("idEntreprise") Integer id);
+    EntrepriseDto findById(@PathVariable("idEntreprise") Long id);
 
-    @GetMapping(value = APP_ROOT + "/entreprises/{codeEntreprise}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Rechercher une entreprise par code entreprise", notes = "Cette methode permet de Rechercher  une entreprise par son CODE", response = EntrepriseDto.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "L' entreprise a ete trouver dans la BDD"),
-            @ApiResponse(code = 404, message = "Aucune entreprise n'a pas ete trouver dans la BDD avec le CODE fournit")
-    })
-    EntrepriseDto findByCodeEntreprise(@PathVariable("codeEntreprise") String codeEntreprise);
 
     @GetMapping(value = APP_ROOT + "/entreprises/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste  des entreprises", notes = "Cette methode permet de renvoyer la liste des entreprises qui se trouve dans la BDD", responseContainer = "List<EntrepriseDto>")
@@ -52,5 +45,5 @@ public interface EntrepriseApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L' entreprise a ete Supprimer dans la BDD"),
     })
-    void delete(@PathVariable("idEntreprise") Integer id);
+    void delete(@PathVariable("idEntreprise") Long id);
 }

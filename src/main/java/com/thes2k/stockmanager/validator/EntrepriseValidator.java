@@ -19,18 +19,12 @@ public class EntrepriseValidator {
             return errors;
 
         }
-        if (!StringUtils.hasLength(dto.getEntrepriseName())) {
-            errors.add("Veillez renseigner le nom de l'entreprise");
 
-        }
         if (!StringUtils.hasLength(dto.getCodeFiscal())) {
             errors.add("Veillez renseigner le CodeFiscal de l'entreprise");
 
         }
-        if (!StringUtils.hasLength(dto.getEntrepriseName())) {
-            errors.add("Veillez renseigner le Nom de l'entreprise");
 
-        }
         if (!StringUtils.hasLength(dto.getEmail())) {
             errors.add("Veillez renseigner l 'email de l'entreprise");
 
@@ -43,10 +37,7 @@ public class EntrepriseValidator {
             errors.add("Veillez renseigner password de l'entreprise");
 
         }
-        if (!StringUtils.hasLength(dto.getPhoto())) {
-            errors.add("Veillez renseigner la photo de l'entreprise");
 
-        }
 
         return errors;
     }

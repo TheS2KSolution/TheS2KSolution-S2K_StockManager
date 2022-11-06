@@ -24,9 +24,8 @@ public class EntityNotFoundException extends RuntimeException {
         this.errorDto = errorDto;
     }
 
-    public EntityNotFoundException(Integer status, String message, ErrorDto errorDto) {
+    public EntityNotFoundException(Integer status, String message) {
         super(message);
-        this.errorDto = errorDto;
         this.status = status;
 
     }

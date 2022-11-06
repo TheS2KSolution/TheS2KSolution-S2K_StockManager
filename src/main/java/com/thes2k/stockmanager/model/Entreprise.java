@@ -15,6 +15,5 @@ import javax.persistence.Entity;
 @Setter
 @Getter
 public class Entreprise extends Compte {
-    private String codeEntreprise;
     private String codeFiscal;
 }

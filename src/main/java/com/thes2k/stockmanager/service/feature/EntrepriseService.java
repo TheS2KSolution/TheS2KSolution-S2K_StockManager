@@ -9,11 +9,12 @@ import java.util.List;
 public interface EntrepriseService {
     Response save(EntrepriseDto dto);
 
+    Response update(EntrepriseDto entrepriseDto);
 
-
-    EntrepriseDto finById(Integer id);
+    EntrepriseDto finById(Long id);
 
     List<EntrepriseDto> findAll();
 
-    void delete(Integer id);
+    Response delete(Long id);
+
 }

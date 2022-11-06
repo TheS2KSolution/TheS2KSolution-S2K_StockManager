@@ -21,14 +21,10 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public EntrepriseDto findById(Integer id) {
-        return null;
+    public EntrepriseDto findById(Long id) {
+        return entrepriseService.finById(id);
     }
 
-    @Override
-    public EntrepriseDto findByCodeEntreprise(String codeEntreprise) {
-        return null;
-    }
 
     @Override
     public List<EntrepriseDto> findAll() {
@@ -36,7 +32,7 @@ public class EntrepriseController implements EntrepriseApi {
     }
 
     @Override
-    public void delete(Integer id) {
-
+    public void delete(Long id) {
+        entrepriseService.delete(id);
     }
 }

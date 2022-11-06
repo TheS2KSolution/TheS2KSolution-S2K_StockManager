@@ -8,8 +8,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class EntrepriseDto extends CompteDto {
-    private Integer id;
-    private String entrepriseName;
+    private Long id;
     private String codeFiscal;
     private String email;
     private String username;

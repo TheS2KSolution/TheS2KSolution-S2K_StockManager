@@ -18,15 +18,12 @@ public class UtilisateurValidator {
             errors.add("Veillez renseigner le mail");
             return errors;
         }
-        if (!StringUtils.hasLength(utilisateurDto.getNom())) {
+        if (!StringUtils.hasLength(utilisateurDto.getFullName())) {
             errors.add("Veillez renseigner le nom Utilisateur");
 
         }
 
-        if (!StringUtils.hasLength(utilisateurDto.getPrenom())) {
-            errors.add("Veillez renseigner le prénom Utilisateur");
 
-        }
         if (!StringUtils.hasLength(utilisateurDto.getEmail())) {
             errors.add("Veillez renseigner le mail");
 
@@ -43,7 +40,7 @@ public class UtilisateurValidator {
             errors.add("Veillez renseigner le mot de passe");
 
         }
-        if (utilisateurDto.getAddressDto() == null) {
+        /*if (utilisateurDto.getAddressDto() == null) {
             errors.add("Veillez renseigner l'Adresse Utilisateur");
 
         } else {
@@ -70,8 +67,8 @@ public class UtilisateurValidator {
             if (!StringUtils.hasLength(utilisateurDto.getAddressDto().getTelephone())) {
                 errors.add("Le champs Telephone est Obligatoire");
 
-            }
-        }
+            }*/
+        //}
         return errors;
     }
 

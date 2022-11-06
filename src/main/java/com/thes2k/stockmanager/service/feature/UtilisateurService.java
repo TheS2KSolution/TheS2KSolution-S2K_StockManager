@@ -1,19 +1,18 @@
 package com.thes2k.stockmanager.service.feature;
 
 import com.thes2k.stockmanager.dto.UtilisateurDto;
+import com.thes2k.stockmanager.exception.Response;
 
 import java.util.List;
 
 public interface UtilisateurService {
-    UtilisateurDto save(UtilisateurDto dto);
+    Response save(UtilisateurDto dto);
 
-    UtilisateurDto findByCodeUtilisateur(String codeUtilisateur);
-
-    UtilisateurDto finById(Integer id);
-
-    UtilisateurDto findByEmail(String email);
+    UtilisateurDto finById(Long id);
 
     List<UtilisateurDto> findAll();
 
-    void delete(Integer id);
+    Response delete(Long id);
+
+    Response update(UtilisateurDto utilisateurDto);
 }

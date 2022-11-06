@@ -4,6 +4,9 @@ import com.thes2k.stockmanager.model.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
-    // Optional<Utilisateur> findCategoryByCodeUtilisateur(String codeUtilisateur);
-    // Optional<Utilisateur> findUtilisateursByEmail(String email);
+    Utilisateur findByUsername(String username);
+
+    Utilisateur findByEmail(String email);
+
+    Utilisateur findByPhone(String phone);
 }
