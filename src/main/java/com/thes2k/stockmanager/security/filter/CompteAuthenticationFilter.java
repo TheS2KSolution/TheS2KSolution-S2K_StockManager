@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -56,12 +57,13 @@ public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
+        List<String> roles = user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
         String accessToken = JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 90L))
                 .withIssuer(request.getRequestURL().toString())
-                .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim("roles", roles)
                 .sign(algorithm);
 
         String refreshToken = JWT.create()
@@ -70,9 +72,11 @@ public class CompteAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        Map<String, String> output = new HashMap<>();
+
+        Map<String, Object> output = new HashMap<>();
         output.put("accessToken", accessToken);
         output.put("refreshToken", refreshToken);
+        output.put("roles", roles);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         try {
             new ObjectMapper().writeValue(response.getOutputStream(), output);

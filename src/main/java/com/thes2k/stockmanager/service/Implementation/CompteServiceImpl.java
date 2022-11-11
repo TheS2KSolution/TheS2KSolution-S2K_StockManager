@@ -64,15 +64,17 @@ public class CompteServiceImpl implements CompteService, UserDetailsService {
                 DecodedJWT decodedJWT = jwtVerifier.verify(refreshToken);
                 String username = decodedJWT.getSubject();
                 Compte account = compteRepository.findCompteByEmailOrPhoneOrUsername(username);
+                List<String> roles = account.getRoles().stream().map(role -> role.getRoleName().toString()).collect(Collectors.toList());
                 String newAccessToken = JWT.create()
                         .withSubject(account.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 90L))
                         .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", account.getRoles().stream().map(role -> role.getRoleName().toString()).collect(Collectors.toList()))
+                        .withClaim("roles", roles)
                         .sign(algorithm);
-                Map<String, String> tokens = new HashMap<>();
+                Map<String, Object> tokens = new HashMap<>();
                 tokens.put("accessToken", newAccessToken);
                 tokens.put("refreshToken", refreshToken);
+                tokens.put("roles", roles);
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokens);
             } catch (Exception e) {

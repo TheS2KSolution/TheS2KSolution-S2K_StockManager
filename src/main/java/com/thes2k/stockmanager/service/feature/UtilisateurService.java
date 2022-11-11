@@ -7,12 +7,8 @@ import java.util.List;
 
 public interface UtilisateurService {
     Response save(UtilisateurDto dto);
-
     UtilisateurDto finById(Long id);
-
     List<UtilisateurDto> findAll();
-
     Response delete(Long id);
-
     Response update(UtilisateurDto utilisateurDto);
 }
