@@ -4,6 +4,7 @@ import 'package:sama/models/ride/ride.dart';
 import 'package:sama/models/ticket/prepareTicket.dart';
 import 'package:sama/models/ticket/ticket.dart';
 import 'package:sama/screen/buy_ticket.dart';
+import 'package:sama/screen/choose.dart';
 import 'package:sama/screen/constants.dart';
 import 'package:sama/service/ride_service/ride_service.dart';
 import 'package:sama/widgets/custom_header_text.dart';
@@ -384,7 +385,7 @@ class _TicketValidScreenState extends State<TicketValidScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const BuyTicketScreen()),
+                        builder: (context) => const ChooseSceen()),
                   );
                 },
                 // color: Colors.transparent,

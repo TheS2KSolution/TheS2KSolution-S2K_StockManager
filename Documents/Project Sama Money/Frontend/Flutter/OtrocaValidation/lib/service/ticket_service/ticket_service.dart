@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:sama/config/config.dart';
-import 'package:sama/models/ticket/ticket.dart';
-import 'package:sama/models/vehicle/vehicle.dart';
+
 
 class TicketService {
 
