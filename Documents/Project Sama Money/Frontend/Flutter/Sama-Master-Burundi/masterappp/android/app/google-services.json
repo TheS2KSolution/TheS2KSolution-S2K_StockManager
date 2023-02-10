@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "177061242325",
+    "project_id": "samamasterappbi",
+    "storage_bucket": "samamasterappbi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177061242325:android:032fa73a38f959cc85495c",
+        "android_client_info": {
+          "package_name": "money.sama.samamasterappbi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177061242325-u1d9f4dt9v87csmcnsnrt7q0lkprkqh0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDV_x2f9K0bhVs6p1-FJhxU_VXMuf95hdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177061242325-u1d9f4dt9v87csmcnsnrt7q0lkprkqh0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
